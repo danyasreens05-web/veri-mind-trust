@@ -9,6 +9,7 @@ import {
   type VeriMindAnalysis,
 } from "@/lib/api/verimind.functions";
 import { AnalysisReport } from "@/components/verimind/AnalysisReport";
+import { saveHistoryEntry } from "@/lib/verimind-history";
 
 export const Route = createFileRoute("/")({
   head: () => ({
