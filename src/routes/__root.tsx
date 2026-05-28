@@ -113,8 +113,32 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="min-h-screen bg-background">
+        <nav className="sticky top-0 z-30 border-b border-border bg-background/70 backdrop-blur">
+          <div className="mx-auto flex max-w-6xl items-center gap-2 px-5 py-3">
+            <Link to="/" className="text-sm font-semibold tracking-tight text-foreground">
+              VeriMind <span className="text-primary">AI</span>
+            </Link>
+            <div className="ml-auto flex items-center gap-1 text-sm">
+              <Link
+                to="/"
+                activeOptions={{ exact: true }}
+                className="rounded-lg px-3 py-1.5 text-muted-foreground transition hover:text-foreground [&.active]:bg-surface [&.active]:text-foreground"
+              >
+                Analyzer
+              </Link>
+              <Link
+                to="/dashboard"
+                className="rounded-lg px-3 py-1.5 text-muted-foreground transition hover:text-foreground [&.active]:bg-surface [&.active]:text-foreground"
+              >
+                Dashboard
+              </Link>
+            </div>
+          </div>
+        </nav>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </div>
     </QueryClientProvider>
   );
 }

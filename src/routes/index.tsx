@@ -9,6 +9,7 @@ import {
   type VeriMindAnalysis,
 } from "@/lib/api/verimind.functions";
 import { AnalysisReport } from "@/components/verimind/AnalysisReport";
+import { saveHistoryEntry } from "@/lib/verimind-history";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -53,6 +54,23 @@ function Home() {
   const mutation = useMutation({
     mutationFn: (input: { question: string; model: string }) =>
       analyze({ data: input }),
+    onSuccess: (data, vars) => {
+      const r = data as {
+        model: string;
+        analyzedAt: string;
+        analysis: VeriMindAnalysis;
+      };
+      saveHistoryEntry({
+        id:
+          typeof crypto !== "undefined" && "randomUUID" in crypto
+            ? crypto.randomUUID()
+            : String(Date.now()),
+        question: vars.question,
+        model: r.model,
+        analyzedAt: r.analyzedAt,
+        analysis: r.analysis,
+      });
+    },
   });
 
   const result = mutation.data as
